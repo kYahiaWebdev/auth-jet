@@ -1,0 +1,18 @@
+# Setup
+composer require laravel/jetstream
+php artisan jetstream:install livewire
+php artisan migrate
+npm install
+npm run dev
+
+# Make Model -m=migration -cr=Conroller_with_CRUD -R=2_form_req_classes_store+update
+php artisan make:model Task -mcrR
+
+# Publish JETSTREAM UI components
+php artisan vendor:publish --tag=jetstream-views
+
+# Manage Roles/Permissions
+- composer require spatie/laravel-permission
+- php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+- php artisan migrate
+- Enable permissions in models (for ex : user)
