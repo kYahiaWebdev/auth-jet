@@ -16,3 +16,19 @@ php artisan vendor:publish --tag=jetstream-views
 - php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
 - php artisan migrate
 - Enable permissions in models (for ex : user)
+
+# Add column to table
+- php artisan make:migration migration_name --table=target_table #dedicated migration
+- $table->type('col_name')
+- php artisan migrate
+
+# Create an event
+php artisan make:event event_name
+php artisan make:listener listner_name --event=event_name
+
+# Create a notification
+php artisan make:notification notification_name
+php artisan notifications:table
+
+# Create a component
+php artisan make:component component_name

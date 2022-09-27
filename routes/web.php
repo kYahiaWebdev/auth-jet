@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +19,8 @@ use App\Http\Controllers\TaskController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('welcome', ['posts' => App\Models\Post::all() ]);
+})->name('home-page');
 
 Route::middleware([
     'auth:sanctum',
@@ -29,14 +32,12 @@ Route::middleware([
     })->name('dashboard');
 
     Route::resource('tasks', TaskController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('comments', CommentController::class);
+    Route::resource('posts', PostController::class);
 });
 
 
 
 
-// TESTS
-Route::get('/test/admin-user', function(){
-    $user = User::where('name', 'Administrator')->get()->first();
-    dd($user->name);
-    return $user->name;
-});
+

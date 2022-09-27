@@ -36,7 +36,7 @@
                            @can('manage tasks')
                            <td class="px-6 py-4">
                               <x-link href="{{ route('tasks.edit', $task) }}">Edit</x-link>
-                              <form method="POST" action="{{ route('tasks.destroy', $task) }}" class="inline-block">
+                              <form method="POST" action="{{ route('tasks.destroy', $task) }}" class="inline-flex">
                                   @csrf
                                   @method('DELETE')
                                   <x-jet-danger-button

@@ -24,7 +24,8 @@
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
+                  <a href="{{ url('/') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+                  @auth
                         <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
@@ -36,7 +37,32 @@
                 </div>
             @endif
 
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+            <div class="px-8">
+
+                @auth
+                <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
+                    <div class="grid grid-cols-1 md:grid-cols-2">
+
+                    @forelse ($posts as $post)
+                    <div class="col bg-gray-50 border border-gray-200 p-10 rounded">
+                        <div class="flex">
+                        <div class="p-6">
+
+                            <h3 class="m-4"><a href="/posts/{{$post->id}}">
+                                {{$post->title}}
+                            </a></h3>
+                            <p >by {{$post->user->name}}</p>
+                        </div>
+                        </div>
+                    </div>
+                    @empty
+                    <p>No Posts</p>
+                    @endforelse
+                    </div>
+                </div>
+                @else
+                
+
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
                     <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto text-gray-700 sm:h-20">
                         <g clip-path="url(#clip0)" fill="#EF3B2D">
@@ -125,7 +151,11 @@
                     <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
                         Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
                     </div>
-                </div>
+                </div> 
+
+                @endauth
+
+                
             </div>
         </div>
     </body>

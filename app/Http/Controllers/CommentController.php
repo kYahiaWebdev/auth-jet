@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CommentCreatedEvent;
 use App\Models\Comment;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CommentController extends Controller
 {
+    use SoftDeletes;
     /**
      * Display a listing of the resource.
      *
@@ -23,9 +26,9 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(StoreCommentRequest $request)
     {
-        //
+        // dd($request);
     }
 
     /**
@@ -36,7 +39,10 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
-        //
+        // dd($request);
+        $comment = Comment::create($request->validated());
+        event(new CommentCreatedEvent(auth()->user(), $comment->post, $comment));
+        return back();
     }
 
     /**
@@ -58,7 +64,7 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
+        dd($comment);
     }
 
     /**
@@ -81,6 +87,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+        return back();
     }
 }
